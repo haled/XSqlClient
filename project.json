@@ -5,6 +5,7 @@
     "System.Data.SqlClient": "4.0.0-*",
     "System.Net.Security": "4.0.0-beta-*",
     "System.Console": "4.0.0-*",
+    "System.Collections": "4.0.0-*",
     "xunit": "2.1.0-*",
     "xunit.runner.dnx": "2.1.0-*"
   },
