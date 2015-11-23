@@ -1,10 +1,40 @@
 using System;
+using System.Collections.Generic;
 using System.Data.SqlClient;
 
-namespace SqlUtility
+namespace XSqlClient
 {
   public class Program
   {
+    private static readonly Dictionary<string,string> _allowedArguments = new Dictionary<string,string> 
+    {
+      {"-s", "serverName"},
+      {"-d", "databaseName"},
+      {"-u", "userName"},
+      {"-p", "password"}
+    };
+
+    public static void Main(string[] args)
+    {
+      var _argParser = new ArgumentParser(_allowedArguments);
+
+      if(args == null || args.Length < 2)
+      {
+        Console.WriteLine(Usage());
+        //System.Environment.Exit(1);
+      }
+
+      Console.WriteLine("So far, so good.");
+    }
+
+    public static string Usage()
+    {
+      return "Fill me in.";
+    }
+  }
+}
+
+/*
     public static void Main(string[] args)
     {
       var connectionString = "Server=.;Database=<DBName>;User ID=<user>;Password=<pwd>;MultipleActiveResultSets=false";
@@ -22,5 +52,4 @@ namespace SqlUtility
         }
       }
     }
-  }
-}
+ */

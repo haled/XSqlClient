@@ -15,7 +15,7 @@
   },
 
   "commands": {
-    "run": "sql_client",
+    "run": "XSqlClient",
     "test": "xunit.runner.dnx"
   }
 }
