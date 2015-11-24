@@ -9,17 +9,17 @@ namespace XSqlClient
     private Dictionary<string,string> _desiredArgs;
 
     private string[] _testArgs;
-    private ArgumentParser _testArgParser;
+    private IArgumentParser _testArgParser;
 
     public ArgumentParserTests()
     {
       _desiredArgs = new Dictionary<string,string> 
-                                                                                   {
+      {
         {"-s", "server"},
         {"-d", "database"},
         {"-u", "user"},
         {"-p", "password"},
-                                                                                   };
+      };
       _testArgs = CreateTestArgs();
       _testArgParser = new ArgumentParser(_desiredArgs);
     }

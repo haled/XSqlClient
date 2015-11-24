@@ -18,13 +18,17 @@ namespace XSqlClient
     {
       var _argParser = new ArgumentParser(_allowedArguments);
 
-      if(args == null || args.Length < 2)
+      var _parsedArgs = _argParser.ParseArguments(args);
+
+      if(!_argParser.ValidateArgs(_parsedArgs))
       {
         Console.WriteLine(Usage());
         //System.Environment.Exit(1);
       }
-
-      Console.WriteLine("So far, so good.");
+      else
+      {
+        Console.WriteLine("So far, so good.");
+      }
     }
 
     public static string Usage()
