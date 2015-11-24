@@ -6,6 +6,9 @@ namespace XSqlClient
 {
   public class Program
   {
+    private IArgumentParser _argumentParser;
+    private IRunner _runner;
+
     private static readonly Dictionary<string,string> _allowedArguments = new Dictionary<string,string> 
     {
       {"-s", "serverName"},
@@ -14,26 +17,41 @@ namespace XSqlClient
       {"-p", "password"}
     };
 
-    public static void Main(string[] args)
+    public Program(IArgumentParser argParser, IRunner runner)
+    {
+      _argumentParser = argParser;
+      _runner = runner;
+    }
+
+    public static int Main(string[] args)
     {
       var _argParser = new ArgumentParser(_allowedArguments);
+      var _progRunner = new Runner();
+      var _prog = new Program(_argParser, _progRunner);
+      
+      return _prog.Run(args);
+    }
 
-      var _parsedArgs = _argParser.ParseArguments(args);
+    public int Run(string[] args)
+    {
+      int _exitCode = 0;
 
-      if(!_argParser.ValidateArgs(_parsedArgs))
+      var _parsedArgs = _argumentParser.ParseArguments(args);
+
+      if(!_argumentParser.ValidateArgs(_parsedArgs))
       {
-        Console.WriteLine(Usage());
-        //System.Environment.Exit(1);
+        Console.WriteLine(_runner.Usage());
+        _exitCode = 1;
       }
       else
       {
-        Console.WriteLine("So far, so good.");
-      }
-    }
+        var connString = _runner.CreateConnectionString(_parsedArgs);
 
-    public static string Usage()
-    {
-      return "Fill me in.";
+        
+        _exitCode = 0;
+      }
+
+      return _exitCode;
     }
   }
 }

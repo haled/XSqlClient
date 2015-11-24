@@ -4,39 +4,19 @@ using Xunit;
 
 namespace XSqlClient
 {
-  public class RunnerTests
+  public class ProgramTests
   {
-    private readonly string CONN_STRING = "Server=server_name;Database=db_name;User ID=user_id;Password=pwd;MultipleActiveResultSets=false;";
-    private readonly string USAGE_STRING = "Usage:\n\nXSqlClient <args>\n\n    -s <server_name>\n    -d <database_name>\n    -u <user_name>\n    -p <password>\n\n";
-
-    private IRunner _testRunner;
+    private IRunner _mockRunner;
     private IArgumentParser _mockArgParser;
+    private Program _testProgram;
 
-    public RunnerTests()
+    public ProgramTests()
     {
       _mockArgParser = new MockArgumentParser();
-      _testRunner = new Runner();
+      _mockRunner = new MockRunner();
+      _testProgram = new Program(_mockArgParser, _mockRunner);
     }
 
-    [Fact]
-    public void CreateConnectionStringWithValidArgs()
-    {
-      var parsedArgs = CreateValidArgs();
-
-      var connString = _testRunner.CreateConnectionString(parsedArgs);
-
-      Assert.Equal(CONN_STRING, connString);
-    }
-
-    [Fact]
-    public void UsageStatementIsCorrect()
-    {
-      string usageString = _testRunner.Usage();
-
-      Assert.Equal(USAGE_STRING, usageString);
-    }
-
-    /*
     [Fact]
     public void RunReturnsZeroExitCodeWithValidArguments()
     {
@@ -46,7 +26,7 @@ namespace XSqlClient
       ((MockArgumentParser)_mockArgParser).MockParsedArgs = fakeArgs;
       ((MockArgumentParser)_mockArgParser).ExpectedValidationResult = fakeValidationResult;
 
-      var exitCode = _testRunner.Run(args);
+      var exitCode = _testProgram.Run(args);
 
       Assert.True(((MockArgumentParser)_mockArgParser).CalledParseArguments);
       Assert.True(((MockArgumentParser)_mockArgParser).CalledValidateArgs);
@@ -62,13 +42,12 @@ namespace XSqlClient
       ((MockArgumentParser)_mockArgParser).MockParsedArgs = fakeArgs;
       ((MockArgumentParser)_mockArgParser).ExpectedValidationResult = fakeValidationResult;
 
-      var exitCode = _testRunner.Run(args);
+      var exitCode = _testProgram.Run(args);
 
       Assert.True(((MockArgumentParser)_mockArgParser).CalledParseArguments);
       Assert.True(((MockArgumentParser)_mockArgParser).CalledValidateArgs);
       Assert.Equal(1, exitCode);
     }
-    */
 
     private Dictionary<string,string> CreateValidArgs()
     {
@@ -81,7 +60,7 @@ namespace XSqlClient
       };
     }
   }
-  /*
+
   public class MockArgumentParser : IArgumentParser
   {
     public bool ExpectedValidationResult { get; set; }
@@ -107,5 +86,17 @@ namespace XSqlClient
       return ExpectedValidationResult;
     }
   }
-  */
+
+  public class MockRunner : IRunner
+  {
+    public string CreateConnectionString(Dictionary<string,string> args)
+    {
+      return "";
+    }
+
+    public string Usage()
+    {
+      return "";
+    }
+  }
 }
