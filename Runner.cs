@@ -4,13 +4,6 @@ using System.Text;
 
 namespace XSqlClient
 {
-  public interface IRunner
-  {
-    string CreateConnectionString(Dictionary<string,string> args);
-    //int Run(string[] args);
-    string Usage();
-  }
-
   public class Runner : IRunner
   {
     private readonly string USAGE_STRING = "Usage:\n\nXSqlClient <args>\n\n    -s <server_name>\n    -d <database_name>\n    -u <user_name>\n    -p <password>\n\n";
