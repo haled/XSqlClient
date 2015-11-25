@@ -6,6 +6,7 @@ namespace XSqlClient
 {
   public class MockRunner : IRunner
   {
+    public ISqlResult ExpectedResultData { get; set; }
     public bool CalledCreateConnectionString { get; set; }
     public bool CalledUsage { get; set; }
     public bool CalledExecuteQuery { get; set; }
@@ -29,10 +30,10 @@ namespace XSqlClient
       return "usage";
     }
 
-    public string ExecuteQuery(string connectionString, string sql)
+    public ISqlResult ExecuteQuery(string connectionString, string sql)
     {
       CalledExecuteQuery = true;
-      return "some string data";
+      return ExpectedResultData;
     }
   }
 }

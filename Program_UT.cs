@@ -8,12 +8,15 @@ namespace XSqlClient
   {
     private IRunner _mockRunner;
     private IArgumentParser _mockArgParser;
+    private ISqlResult _mockSqlResult;
     private Program _testProgram;
 
     public ProgramTests()
     {
       _mockArgParser = new MockArgumentParser();
       _mockRunner = new MockRunner();
+      _mockSqlResult = new MockSqlResult();
+      ((MockSqlResult)_mockSqlResult).ExpectedTextOutput = "formatted text";
       _testProgram = new Program(_mockArgParser, _mockRunner);
     }
 
@@ -25,6 +28,7 @@ namespace XSqlClient
       bool fakeValidationResult = true;
       ((MockArgumentParser)_mockArgParser).MockParsedArgs = fakeArgs;
       ((MockArgumentParser)_mockArgParser).ExpectedValidationResult = fakeValidationResult;
+      ((MockRunner)_mockRunner).ExpectedResultData = _mockSqlResult;
 
       var exitCode = _testProgram.Run(args);
 
@@ -32,6 +36,7 @@ namespace XSqlClient
       Assert.True(((MockArgumentParser)_mockArgParser).CalledValidateArgs);
       Assert.True(((MockRunner)_mockRunner).CalledCreateConnectionString);
       Assert.True(((MockRunner)_mockRunner).CalledExecuteQuery);
+      Assert.True(((MockSqlResult)_mockSqlResult).CalledPrintDataToText);
 
       Assert.Equal(0, exitCode);
     }

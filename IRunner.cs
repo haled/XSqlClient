@@ -9,6 +9,6 @@ namespace XSqlClient
     string CreateConnectionString(Dictionary<string,string> args);
     //int Run(string[] args);
     string Usage();
-    string ExecuteQuery(string connectionString, string sql);
+    ISqlResult ExecuteQuery(string connectionString, string sql);
   }
 }

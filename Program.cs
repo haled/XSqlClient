@@ -51,7 +51,7 @@ namespace XSqlClient
 
         var output = _runner.ExecuteQuery(connString, queryString);
 
-        Console.WriteLine(output);
+        Console.WriteLine(output.PrintDataToText());
 
         _exitCode = 0;
       }
