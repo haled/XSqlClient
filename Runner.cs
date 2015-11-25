@@ -47,39 +47,44 @@ namespace XSqlClient
         var reader = cmd.ExecuteReader();
         while(reader.Read())
         {
-          if(gettingColumnNames)
-          {
-            gettingColumnNames = false;
-            for(int j = 0; j < reader.FieldCount; j++)
-            {
-              columnNames.Add(reader.GetName(j));
-            }
-
-            foreach(var columnName in columnNames)
-            {
-              output.Append(columnName);
-              output.Append("\t");
-            }
-            output.Append("\n");
-
-            foreach(var columnName in columnNames)
-            {
-              output.Append("".PadLeft(columnName.Length, '-'));
-              output.Append("\t");
-            }
-            output.Append("\n");
-          }
-
           for(int i = 0; i < reader.FieldCount; i++)
           {
-            output.Append(reader[i]);
-            output.Append("\t");
+            if(gettingColumnNames)
+            {
+              gettingColumnNames = i < reader.FieldCount;
+              columnNames.Add(reader.GetName(i));
+            }
+            output.Append(CreateColumn(reader[i].ToString()));
           }
           output.Append("\n");
         }
       }
 
-      return output.ToString();
+      var header = CreateHeaders(columnNames);
+
+      return header + output.ToString();
+    }
+
+    private string CreateHeaders(List<string> columnNames)
+    {
+      var line1 = new StringBuilder();
+      var line2 = new StringBuilder();
+
+      foreach(var columnName in columnNames)
+      {
+        line1.Append(CreateColumn(columnName));
+        line2.Append(CreateColumn("".PadLeft(columnName.Length, '-')));
+      }
+      line1.Append("\n");
+      line1.Append(line2);
+      line1.Append("\n");
+
+      return line1.ToString();
+    }
+
+    private string CreateColumn(string value)
+    {
+      return value + "\t";
     }
   }
 }
