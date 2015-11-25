@@ -14,7 +14,8 @@ namespace XSqlClient
       {"-s", "serverName"},
       {"-d", "databaseName"},
       {"-u", "userName"},
-      {"-p", "password"}
+      {"-p", "password"},
+      {"-q", "query"}
     };
 
     public Program(IArgumentParser argParser, IRunner runner)
@@ -46,8 +47,12 @@ namespace XSqlClient
       else
       {
         var connString = _runner.CreateConnectionString(_parsedArgs);
+        var queryString = _parsedArgs["-q"];
 
-        
+        var output = _runner.ExecuteQuery(connString, queryString);
+
+        Console.WriteLine(output);
+
         _exitCode = 0;
       }
 

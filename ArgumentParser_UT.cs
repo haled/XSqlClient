@@ -19,6 +19,7 @@ namespace XSqlClient
         {"-d", "database"},
         {"-u", "user"},
         {"-p", "password"},
+        {"-q", "query"},
       };
       _testArgs = CreateTestArgs();
       _testArgParser = new ArgumentParser(_desiredArgs);
@@ -71,7 +72,7 @@ namespace XSqlClient
       var parsedArgs = _testArgParser.ParseArguments(args);
 
       Assert.NotNull(parsedArgs);
-      Assert.Equal(4, parsedArgs.Keys.Count);
+      Assert.Equal(5, parsedArgs.Keys.Count);
       Assert.Equal("server_name", parsedArgs["-s"]);
       Assert.Equal("user_id", parsedArgs["-u"]);
       Assert.Equal("pwd", parsedArgs["-p"]);
@@ -100,7 +101,7 @@ namespace XSqlClient
 
     private string[] CreateTestArgs()
     {
-      string[] _args =  new string[8];
+      string[] _args =  new string[10];
       _args[0] = "-s";
       _args[1] = "server_name";
       _args[2] = "-d";
@@ -109,6 +110,8 @@ namespace XSqlClient
       _args[5] = "user_id";
       _args[6] = "-p";
       _args[7] = "pwd";
+      _args[8] = "-q";
+      _args[9] = "query";
 
       return _args;
     }
@@ -120,7 +123,8 @@ namespace XSqlClient
         {"-s","server_name"},
         {"-d","db_name"},
         {"-u","user_id"},
-        {"-p","pwd"}
+        {"-p","pwd"},
+        {"-q","query"}
       };
     }
   }

@@ -20,8 +20,8 @@ namespace XSqlClient
     [Fact]
     public void RunReturnsZeroExitCodeWithValidArguments()
     {
-      string[] args = new string[4];
-      Dictionary<string,string> fakeArgs = new Dictionary<string,string>();
+      string[] args = new string[5];
+      Dictionary<string,string> fakeArgs = CreateValidArgs();
       bool fakeValidationResult = true;
       ((MockArgumentParser)_mockArgParser).MockParsedArgs = fakeArgs;
       ((MockArgumentParser)_mockArgParser).ExpectedValidationResult = fakeValidationResult;
@@ -30,6 +30,9 @@ namespace XSqlClient
 
       Assert.True(((MockArgumentParser)_mockArgParser).CalledParseArguments);
       Assert.True(((MockArgumentParser)_mockArgParser).CalledValidateArgs);
+      Assert.True(((MockRunner)_mockRunner).CalledCreateConnectionString);
+      Assert.True(((MockRunner)_mockRunner).CalledExecuteQuery);
+
       Assert.Equal(0, exitCode);
     }
 
@@ -56,7 +59,8 @@ namespace XSqlClient
         {"-s","server_name"},
         {"-d","db_name"},
         {"-u","user_id"},
-        {"-p","pwd"}
+        {"-p","pwd"},
+        {"-q","query"}
       };
     }
   }
