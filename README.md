@@ -1,6 +1,18 @@
 # XSqlClient
-This is a DNX command-line utility for accessing an MS SQL Server database.
+This is a DNX command-line utility for accessing an MS SQL Server database from a non-Windows system.  It uses the RC1 release of the .NET Execution environment (DNX) and the CoreCLR.
 
-One of the utilities that I've wanted to write since I learned about DNX is a command-line SQL client.  Quite often, I need to run exploratory queries to investigate data, usually when troubleshooting.  It is a pain to switch from my editor of choice (Emacs) on my Mac to a virtual machine so that I can run a basic SELECT statement.
+The assumption that has to be made is that the database to access has SQL Server authentication configured and the user of this utility has a valid SQL Server user name and password.  With this configuration, the tool accepts arguments for the server, database, user, password, and query to run.  The usage is:
 
-Now that .NET Core supports native SQL Server access, I'm creating a cross-platform client to access SQL Server.
+```
+XSqlClient <args>
+
+    -s <server_name>
+    -d <database_name>
+    -u <user_name>
+    -p <password>
+    -q <query>
+```
+
+My typical call with this utility is:
+
+`dnx run -s <server> -d <db> -u <username> -p <password> -q "quote delimited query"`
