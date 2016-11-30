@@ -1,17 +1,28 @@
 {
-  "version": "1.0.0-*",
+    "version": "1.0.0-*",
+
+    "buildOptions": {
+	"debugType": "portable",
+	"emitEntryPoint": true
+    },
 
   "dependencies": {
-    "System.Data.SqlClient": "4.0.0-*",
-    "System.Net.Security": "4.0.0-beta-*",
-    "System.Console": "4.0.0-*",
-    "System.Collections": "4.0.0-*",
-    "xunit": "2.1.0-*",
-    "xunit.runner.dnx": "2.1.0-*"
+    "System.Data.SqlClient": "4.1.0",
+
+    "xunit": "2.2.0-beta3-build3402",
+    "dotnet-test-xunit": "2.2.0-preview2-build1029"
   },
 
-  "frameworks": {
-    "dnxcore50": {}
+    "frameworks": {
+	"netcoreapp1.0": {
+	    "dependencies": {
+		"Microsoft.NETCore.App": {
+		    "type": "platform",
+		    "version": "1.0.1"
+		}
+	    },
+	    "imports": "dnxcore50"
+	}
   },
 
   "commands": {
